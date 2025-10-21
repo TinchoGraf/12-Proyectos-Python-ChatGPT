@@ -1,0 +1,227 @@
+Ah, perfecto 😄 — ¡gracias por aclararlo!
+Entonces te referís al **Proyecto 4: Agenda de contactos con JSON**, el siguiente paso en tu *roadmap de 12 proyectos Python*.
+
+Te explico en detalle **qué se espera de ese proyecto**, **qué conceptos vas a practicar**, **cómo estructurarlo paso a paso** y **qué variantes podés hacer para mejorarlo** 👇
+
+---
+
+# 📒 PROYECTO 4 — “Agenda de Contactos con JSON”
+
+---
+
+## 🎯 **Objetivo general**
+
+Crear una aplicación de **consola** que funcione como una **agenda electrónica básica**, permitiendo al usuario:
+
+1. **Agregar contactos nuevos** (nombre, teléfono, email, etc.)
+2. **Buscar contactos existentes**
+3. **Eliminar contactos**
+4. **Listar todos los contactos**
+5. **Guardar y recuperar los datos automáticamente** usando un **archivo JSON** (en lugar de texto plano como en el proyecto anterior)
+
+---
+
+## 🧩 **Conceptos que se evalúan / se espera que practiques**
+
+| Concepto                    | Qué demuestra                                                                                          |
+| --------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Diccionarios**            | Representar contactos como pares clave-valor (por ejemplo, `{ "nombre": "Juan", "telefono": "1234" }`) |
+| **Listas de diccionarios**  | Almacenar todos los contactos dentro de una lista (por ejemplo, `contactos = [ {...}, {...} ]`)        |
+| **Manejo de archivos JSON** | Usar `json.dump()` y `json.load()` para guardar y leer datos estructurados                             |
+| **Funciones**               | Organizar el programa modularmente: agregar, buscar, listar, eliminar, guardar                         |
+| **Control de errores**      | Manejar archivos inexistentes, entradas vacías, duplicados, etc.                                       |
+| **Menú interactivo**        | Repetir opciones hasta que el usuario elija salir                                                      |
+
+---
+
+## 🧠 **Qué habilidades nuevas incorpora respecto al Proyecto 3**
+
+| Proyecto 3                                        | Proyecto 4                                                       |
+| ------------------------------------------------- | ---------------------------------------------------------------- |
+| Guarda texto plano línea por línea                | Guarda **datos estructurados (JSON)**                            |
+| Solo manipula strings                             | Manipula **diccionarios y listas anidadas**                      |
+| Usa un archivo por lista (pendientes/completadas) | Usa **un único archivo JSON** con toda la agenda                 |
+| Flujo lineal simple                               | Comienza a manejar **datos más complejos (múltiples atributos)** |
+| Consola sin validaciones avanzadas                | Introduce validaciones de campos (ej. email, duplicados, etc.)   |
+
+---
+
+## 🧱 **Estructura lógica paso a paso**
+
+---
+
+### 🥇 Paso 1 — Importar módulo JSON y preparar las estructuras
+
+```python
+import json
+
+ARCHIVO = "agenda.json"
+
+def cargar_contactos():
+    try:
+        with open(ARCHIVO, "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+```
+
+👉 **Objetivo:** si el archivo no existe, arrancar con una lista vacía.
+
+---
+
+### 🥈 Paso 2 — Guardar contactos
+
+```python
+def guardar_contactos(contactos):
+    with open(ARCHIVO, "w") as f:
+        json.dump(contactos, f, indent=4)
+```
+
+💡 `indent=4` guarda el archivo con formato legible.
+
+---
+
+### 🥉 Paso 3 — Agregar contacto
+
+```python
+def agregar_contacto(contactos):
+    nombre = input("Nombre: ").strip()
+    telefono = input("Teléfono: ").strip()
+    email = input("Email: ").strip()
+
+    nuevo = {"nombre": nombre, "telefono": telefono, "email": email}
+    contactos.append(nuevo)
+    print(f"Contacto '{nombre}' agregado correctamente.")
+```
+
+---
+
+### 🏗️ Paso 4 — Buscar contacto
+
+```python
+def buscar_contacto(contactos):
+    criterio = input("Ingrese el nombre o parte del nombre a buscar: ").lower()
+    resultados = [c for c in contactos if criterio in c["nombre"].lower()]
+
+    if resultados:
+        for c in resultados:
+            print(f"- {c['nombre']} ({c['telefono']}, {c['email']})")
+    else:
+        print("No se encontraron contactos.")
+```
+
+---
+
+### 🧩 Paso 5 — Eliminar contacto
+
+```python
+def eliminar_contacto(contactos):
+    nombre = input("Ingrese el nombre exacto del contacto a eliminar: ").strip()
+    for c in contactos:
+        if c["nombre"].lower() == nombre.lower():
+            contactos.remove(c)
+            print(f"Contacto '{nombre}' eliminado.")
+            return
+    print("No se encontró el contacto.")
+```
+
+---
+
+### 🧱 Paso 6 — Mostrar todos los contactos
+
+```python
+def listar_contactos(contactos):
+    if not contactos:
+        print("No hay contactos guardados.")
+        return
+    for i, c in enumerate(contactos, 1):
+        print(f"{i}. {c['nombre']} - {c['telefono']} - {c['email']}")
+```
+
+---
+
+### 🏁 Paso 7 — Menú principal
+
+```python
+def main():
+    contactos = cargar_contactos()
+
+    while True:
+        print("\n--- AGENDA DE CONTACTOS ---")
+        print("1. Agregar contacto")
+        print("2. Buscar contacto")
+        print("3. Eliminar contacto")
+        print("4. Listar contactos")
+        print("5. Salir")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            agregar_contacto(contactos)
+        elif opcion == "2":
+            buscar_contacto(contactos)
+        elif opcion == "3":
+            eliminar_contacto(contactos)
+        elif opcion == "4":
+            listar_contactos(contactos)
+        elif opcion == "5":
+            guardar_contactos(contactos)
+            print("Agenda guardada. Hasta luego!")
+            break
+        else:
+            print("Opción inválida.")
+```
+
+Y al final:
+
+```python
+if __name__ == "__main__":
+    main()
+```
+
+---
+
+## 📂 **Ejemplo de archivo JSON generado**
+
+```json
+[
+    {
+        "nombre": "Juan Pérez",
+        "telefono": "123456789",
+        "email": "juan@gmail.com"
+    },
+    {
+        "nombre": "Ana Torres",
+        "telefono": "987654321",
+        "email": "ana.torres@hotmail.com"
+    }
+]
+```
+
+---
+
+## 🌟 **Extras opcionales (para destacar tu versión en GitHub)**
+
+1. **Validar emails** con una expresión regular (`re.match`).
+2. **Evitar duplicados** (no permitir dos contactos con el mismo nombre).
+3. **Permitir editar contactos existentes.**
+4. **Buscar por teléfono o email, no solo por nombre.**
+5. **Exportar a CSV** además de JSON.
+6. **Agregar color al texto** (con `colorama`) o limpiar pantalla (`os.system("cls")` / `clear`).
+
+---
+
+## 📊 **Qué se evalúa**
+
+| Criterio                 | Ponderación | Descripción                                            |
+| ------------------------ | ----------- | ------------------------------------------------------ |
+| Lógica general           | 25%         | El programa funciona sin errores, sigue un flujo claro |
+| Modularización           | 20%         | Usa funciones para tareas específicas                  |
+| Estructuras de datos     | 20%         | Usa listas y diccionarios correctamente                |
+| Manejo de archivos JSON  | 20%         | Carga y guarda datos persistentes                      |
+| Claridad y documentación | 15%         | Código legible, mensajes claros, README explicativo    |
+
+---
+
+¿Querés que te arme una **plantilla base (esqueleto del código)** con las funciones vacías, para que solo completes la lógica?
+Así podrías enfocarte más en pensar el flujo sin perderte en detalles sintácticos.
