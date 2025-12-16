@@ -31,24 +31,24 @@ def obtener_opcion():
 
 
 #Creamos la funcion principal que segun la opcion que elija el usuario, llamara a las funciones correspondientes
-def main():
+def llamadofunciones():
     estudiantes = {}
 
     while True:
         mostrar_menu()
         opcion = obtener_opcion()
 
-        if opcion == '1':
+        if opcion == 1:
             agregar_estudiante(estudiantes)
-        elif opcion == '2':
+        elif opcion == 2:
             registrar_nota(estudiantes)
-        elif opcion == '3':
+        elif opcion == 3:
             mostrar_estudiantes(estudiantes)
-        elif opcion == '4':
+        elif opcion == 4:
             calcular_promedios(estudiantes)
-        elif opcion == '5':
+        elif opcion == 5:
             guardar_datos(estudiantes)
-        elif opcion == '6':
+        elif opcion == 6:
             print("Saliendo del programa...")
             break
         else:
@@ -73,5 +73,7 @@ def calcular_promedios(estudiantes):
 def guardar_datos(estudiantes):
     print("la funcion entra")
 
-if __name__ == "__main__":
-    main()
+
+#Llamamos a la funcion principal para iniciar el programa
+llamadofunciones()
+
