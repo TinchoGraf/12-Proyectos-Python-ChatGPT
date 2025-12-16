@@ -53,3 +53,25 @@ def main():
             break
         else:
             print("Opción no válida. Por favor, intente de nuevo.")
+
+#Ahora creamos las funciones que seran llamadas en el menu principal
+
+#Por el momento solo le ponemos un print para verificar que la funcion se llama correctamente
+
+def agregar_estudiante(estudiantes):
+    print("la funcion entra")
+
+def registrar_nota(estudiantes):
+    print("la funcion entra")
+
+def mostrar_estudiantes(estudiantes):
+    print("la funcion entra")
+
+def calcular_promedios(estudiantes):
+    print("la funcion entra")
+
+def guardar_datos(estudiantes):
+    print("la funcion entra")
+
+if __name__ == "__main__":
+    main()
