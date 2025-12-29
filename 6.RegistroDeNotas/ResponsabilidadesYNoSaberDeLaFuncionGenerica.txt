@@ -1,0 +1,8 @@
+Dentro de las responsabilidades de esta nueva "funcion generica" deberian estar:
+    El bucle con el while true para ciclar en casos erroneos
+    El input donde el usuario ingrese el dato que se pide
+    El return del dato correcto
+
+Dentro de los no saberes de esta nueva funcion:
+    No deberia saber que reglas especificas tiene cada funcion original, por ejemplo la de la edad tiene restricciones minimas y maximas, ademas de poner una entrada no valida
+    Por otro lado, la del nombre, tiene que limpiarse, chequear que no este vacio y que no tenga numeros dentro de si mismo
