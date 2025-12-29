@@ -22,4 +22,24 @@ def PedirEdadUsuario():
         except ValueError:
             print("Entrada inválida. Por favor, ingrese un número entero para la edad.")
 
-
+#Creamos una funcion que pide al usuario su nombre y lo devuelve
+def PedirNombreUsuario():
+    while True:
+        #pedimos el nombre al usuario
+        nombre = input("Por favor, ingrese su nombre: ")
+        #limpiamos espacios en blanco al inicio y al final
+        nombreLimpio = nombre.strip()
+        #chequeamos que el nombre no este vacio
+        if nombreLimpio.length == 0:
+            print("El nombre no puede estar vacío. Intente nuevamente.")
+        #chequeamos que el nombre no sea solo espacios en blanco
+        elif nombreLimpio == "":
+            print("El nombre no puede ser solo espacios en blanco. Intente nuevamente.")
+        #chequeamos que el nombre no contenga numeros
+        #aqui python tiene una funcion any() que devuelve True si algun elemento del iterable es True
+        #y chequeamos uno por uno los caracteres del nombre para ver si alguno es un digito
+        elif any(char.isdigit() for char in nombreLimpio):
+            print("El nombre no puede contener números. Intente nuevamente.")
+        #si todo esta bien, devolvemos el nombre limpio
+        else:
+            return nombreLimpio
