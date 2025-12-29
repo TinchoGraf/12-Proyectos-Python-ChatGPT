@@ -3,3 +3,7 @@ Veo que ambas funciones, tanto la que pide edad, como la que valida el nombre ti
  Un Input(): Donde ingresan el dato que vamos a trabajar en la funcion
  If´s que chequean si los datos ingresados cumplen con ciertos requisitos que ponemos nosotros (el programador)
  Un Return que devuelve el dato de manera ya controlada
+
+ Por parte de los especificos:
+  Dentro de la funcion que pide la edad, encontramos un try y except en caso de que el usuario ingrese un texto alfabetico como numero y tenemos un comparador con constantes definidas en el inicio del programa
+  Por parte de la funcion que pide el nombre, tiene una parte que modifica el input del usuario en una version mas limpia del mismo
