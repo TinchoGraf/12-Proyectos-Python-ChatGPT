@@ -1,0 +1,5 @@
+Veo que ambas funciones, tanto la que pide edad, como la que valida el nombre tienen:
+ Un While True: Por lo que ambas estan ciclando algo que no sabemos con certeza cuando pueda terminar (a diferencia de un for)
+ Un Input(): Donde ingresan el dato que vamos a trabajar en la funcion
+ If´s que chequean si los datos ingresados cumplen con ciertos requisitos que ponemos nosotros (el programador)
+ Un Return que devuelve el dato de manera ya controlada
