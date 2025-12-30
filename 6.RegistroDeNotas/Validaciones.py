@@ -4,14 +4,20 @@
 #creamos constantes para los minimos y maximos de la edad
 EDAD_MINIMA = 1
 EDAD_MAXIMA = 120
-
+#agregamos una constante de corte para los bucles de ingreso
+CORTE = "*"
 
 #Funcion generica que pide un dato y lo valida con una funcion de validacion pasada por parametro
 def PedirDato(mensaje, funcionValidacion):
     #ciclamos hasta que el dato sea valido
     while True:
-            #pedimos el dato al usuario
+            #pedimos el dato al usuario recordandole la opcion de corte
+            print(f"Ingrese '{CORTE}' para finalizar el ingreso.")
             dato = input(mensaje)
+
+            #si el usuario ingresa el dato de corte, devolvemos None
+            if dato == CORTE:
+                break
             #enviamos el dato a validar a la funcion de validacion
             datoValido = funcionValidacion(dato)
 
@@ -73,14 +79,31 @@ def ValidarEdad(edad):
     
 #Ahora armamos un main para probar las funciones
 def main():
-    #pedimos el nombre al usuario usando la funcion generica
-    nombre = PedirDato("Por favor, ingrese su nombre: ", ValidarNombre)
-    #pedimos la edad al usuario usando la funcion generica
-    edad = PedirDato("Por favor, ingrese su edad: ", ValidarEdad)
 
+    #agregamos una lista vacia donde guardaremos los datos
+    edades = []
+
+    #metemos todo en un bucle para permitir multiples ingresos
+    while True:
+        #pedimos el nombre al usuario usando la funcion generica
+        nombre = PedirDato("Por favor, ingrese su nombre: ", ValidarNombre)
+        #pedimos la edad al usuario usando la funcion generica
+        edad = PedirDato("Por favor, ingrese las edades que quiera guardar: ", ValidarEdad)
+
+        #agregamos las edades validas a la lista
+        edades.append(edad)
+
+    """"
     #mostramos los datos ingresados
     print(f"Nombre: {nombre}")
-    print(f"Edad: {edad}")   
+    print(f"Edad: {edad}") 
+    """
+    #Imprimimos todas las edades ingresadas
+    print("Edades ingresadas:")
+    for e in edades:
+        print(f"- {e} años")
+
+
 #llamamos al main
 if __name__ == "__main__":
     main()
