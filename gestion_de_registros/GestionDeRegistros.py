@@ -1,5 +1,13 @@
 #Importamos las funciones necesarias desde Validaciones.py
-from RegistroDeNotas.Validaciones import PedirDato, ValidarNombre, ValidarEdad, GuardarEnJson
+from registro_de_notas.Validaciones import (
+    PedirDato,
+    ValidarNombre,
+    ValidarEdad,
+    GuardarEnJson
+)
+
+# Constante para finalizar el ingreso de datos
+CORTE = "*"
 
 personas = []
 
