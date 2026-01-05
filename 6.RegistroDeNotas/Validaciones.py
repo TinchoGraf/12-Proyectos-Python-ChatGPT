@@ -126,6 +126,20 @@ def main():
     for e in edades:
         print(f"- {e} años")
 
+    #Mostramos la cantidad de edades ingresadas
+    # Procesamiento de la lista (6.4.1)
+    if len(edades) == 0:
+        print("La lista está vacía.")
+    else:
+        print(f"Cantidad de edades ingresadas: {len(edades)}")
+        print(f"Edad mínima registrada: {min(edades)}")
+        print(f"Edad máxima registrada: {max(edades)}")
+        #Se calcula el promedio de edades
+        promedio = sum(edades) / len(edades)
+        print(f"Promedio de edades: {promedio:.2f}")
+
+
+
 
 #llamamos al main
 if __name__ == "__main__":
