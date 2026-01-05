@@ -1,6 +1,10 @@
 #Vamos a crear una funcion generica que pida los datos, arme el bucle, y devuelva el dato correcto
 #Tambien vamos a crear funciones especificas que le pasen las reglas a esta funcion generica
 
+#Importamos la libreria json para guardar los datos
+import json
+import os
+
 #creamos constantes para los minimos y maximos de la edad
 EDAD_MINIMA = 1
 EDAD_MAXIMA = 120
@@ -84,12 +88,29 @@ def ValidarEdad(edad):
                 "estado": "error",
                  "mensajeError": "Entrada inválida. Por favor, ingrese un número entero para la edad."
         }
-    
+
+#Armamos una funcion que lea desde JSON los datos guardados
+def CargarDesdeJson(nombreArchivo):
+    if not os.path.exists(nombreArchivo):
+        return []
+
+    with open(nombreArchivo, "r", encoding="utf-8") as archivo:
+        datos = json.load(archivo)
+        return datos.get("edades", [])
+
+
+#Armamos una funcion que guarde en JSON los datos ingresados
+def GuardarEnJson(nombreArchivo, datos):
+    with open(nombreArchivo, "w", encoding="utf-8") as archivo:
+        json.dump(datos, archivo, indent=4, ensure_ascii=False)
+
+
 #Ahora armamos un main para probar las funciones
 def main():
 
-    #agregamos una lista vacia donde guardaremos los datos
-    edades = []
+    #agregamos una lista para guardar las edades
+    edades = CargarDesdeJson("edades.json")
+
 
     print("Ingrese las edades de las personas que quiera guardar.")
     print(f"Para finalizar el ingreso, ingrese '{CORTE}'.")
@@ -137,6 +158,18 @@ def main():
         #Se calcula el promedio de edades
         promedio = sum(edades) / len(edades)
         print(f"Promedio de edades: {promedio:.2f}")
+        #Guardamos las edades en un archivo JSON
+        datos = {
+        "edades": edades,
+        "cantidad": len(edades),
+        "minima": min(edades),
+        "maxima": max(edades),
+        "promedio": sum(edades) / len(edades)
+    }
+
+        GuardarEnJson("edades.json", datos)
+        print("Datos guardados en edades.json")
+    
 
 
 
