@@ -31,3 +31,19 @@ while True:
     }
 
     personas.append(persona)
+
+def procesamiento_de_datos(personas):
+    if not personas:
+        print("No hay personas cargadas para procesar.")
+        return
+    
+    print("\nProcesando datos de las personas ingresadas:")
+
+    print(f"\nTotal de personas ingresadas: {len(personas)}")
+
+    print("\nListado de personas:")
+    for idx, persona in enumerate(personas, start=1):
+        print(f"{idx}. Nombre: {persona['nombre']}, Edad: {persona['edad']}")
+
+procesamiento_de_datos(personas)
+
