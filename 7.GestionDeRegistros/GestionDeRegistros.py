@@ -1,9 +1,20 @@
 #Importamos las funciones necesarias desde Validaciones.py
 from registro_de_notas.Validaciones import PedirDato, ValidarNombre, ValidarEdad, GuardarEnJson
+import os
+import json
 
 CORTE = "*"
 
-personas = []
+def CargarDesdeJson(nombreArchivo):
+
+    if not os.path.exists(nombreArchivo):
+        return []
+
+    with open(nombreArchivo, "r", encoding="utf-8") as archivo:
+        datos = json.load(archivo)
+        return datos.get("personas", [])
+
+personas = CargarDesdeJson("personas.json")
 
 print("Ingrese los datos de las personas.")
 print(f"Para finalizar, ingrese '{CORTE}' como nombre.")
