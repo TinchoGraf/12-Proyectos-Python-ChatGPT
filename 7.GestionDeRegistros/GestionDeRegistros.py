@@ -47,3 +47,8 @@ def procesamiento_de_datos(personas):
 
 procesamiento_de_datos(personas)
 
+if not personas:
+    print("No hay datos guardados en la lista.")
+else:
+    GuardarEnJson("personas.json", personas)
+    print("Datos guardados en 'personas.json'.")
