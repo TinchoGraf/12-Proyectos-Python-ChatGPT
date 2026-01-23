@@ -12,7 +12,7 @@ def CargarDesdeJson(nombreArchivo):
 
     with open(nombreArchivo, "r", encoding="utf-8") as archivo:
         datos = json.load(archivo)
-        return datos.get("personas", [])
+        return datos
 
 personas = CargarDesdeJson("personas.json")
 
@@ -57,6 +57,41 @@ def procesamiento_de_datos(personas):
         print(f"{idx}. Nombre: {persona['nombre']}, Edad: {persona['edad']}")
 
 procesamiento_de_datos(personas)
+
+def listar_personas(personas):
+    if not personas:
+        print("No hay personas para listar.")
+        return
+    
+    print("\nListado completo de personas:")
+    for idx, persona in enumerate(personas, start=1):
+        print(f"{idx}. Nombre: {persona['nombre']}, Edad: {persona['edad']}")
+
+def eliminar_personas(personas):
+    if not personas:
+        print("No hay personas para eliminar.")
+        return
+    
+    while True:
+        listar_personas(personas)
+        indice = input("\nIngrese el número de la persona a eliminar (o 'salir' para terminar): ")
+        
+        if indice.lower() == 'salir':
+            break
+        
+        if not indice.isdigit() or int(indice) < 1 or int(indice) > len(personas):
+            print("Índice inválido. Intente nuevamente.")
+            continue
+        
+        indice = int(indice) - 1
+        persona_eliminada = personas.pop(indice)
+        print(f"Persona eliminada: {persona_eliminada['nombre']}, Edad: {persona_eliminada['edad']}")
+
+print("El listado de las personas es el siguiente:")
+listar_personas(personas)
+
+print("Elija un numero de persona para eliminar:")
+eliminar_personas(personas)
 
 if not personas:
     print("No hay datos guardados en la lista.")
