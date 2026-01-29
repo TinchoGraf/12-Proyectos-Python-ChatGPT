@@ -34,5 +34,23 @@ def mostrar_personas(lista_personas):
     copia_lista = lista_personas.copy()
     return copia_lista
 
+#Creamos una funcion que reciba por parametro una lista, un id, un nombre y una edad; y modifique la persona que coincida con el id
+def modificar_persona(lista_personas, id_persona, nuevo_nombre, nueva_edad):
+    persona_modificada = encontrar_persona_por_id(lista_personas, id_persona)
+    if persona_modificada is None:
+        return None
+    if persona_modificada["nombre"] != nuevo_nombre:
+        persona_modificada["nombre"] = nuevo_nombre
+    if persona_modificada["edad"] != nueva_edad:
+        persona_modificada["edad"] = nueva_edad
+    return persona_modificada   
 
-        
+#Creamos una funcion que reciba por parametro una lista y un id; y elimine la persona que coincida con el id
+def eliminar_persona(lista_personas, id_persona):
+    persona_a_eliminar = encontrar_persona_por_id(lista_personas, id_persona)
+    if persona_a_eliminar is None:
+        return None
+    lista_personas.remove(persona_a_eliminar)
+    return persona_a_eliminar
+
+
