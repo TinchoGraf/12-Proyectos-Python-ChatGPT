@@ -54,3 +54,80 @@ def eliminar_persona(lista_personas, id_persona):
     return persona_a_eliminar
 
 
+#Creamos una funcion controladora que reciba por parametros, la accion a realizar, los datos y la lista
+def controlador(accion, dato, lista_personas):
+    
+    #Si la accion es cargar, llamamos a la funcion cargar_lista y chequeamos los estados para devolver un mensaje adecuado
+    if accion == "cargar":
+        nombre_persona = dato.get("nombre")
+        edad_persona = dato.get("edad")
+
+        #Encapsulamos el resultado en una variable para luego chequear si es None o no
+        result = cargar_lista(lista_personas, nombre_persona, edad_persona)
+
+        #Si el resultado es None, devolvemos un mensaje de error, sino devolvemos un mensaje de exito
+        if result is None:
+            return { "estado": "error", "accion": "cargar", "mensaje": "No se pudo cargar a la persona", "data": None }
+        else:
+            return { "estado": "ok", "accion": "cargar", "mensaje": "Persona cargada exitosamente", "data": result }
+    
+    #Si la accion es encontrar, llamamos a la funcion encontrar_persona_por_id
+    elif accion == "encontrar":
+
+        id_persona = dato.get("id")
+
+        #Encapsulamos el resultado en una variable para luego chequear si es None o no
+        result = encontrar_persona_por_id(lista_personas, id_persona)
+        
+        #Si el resultado es None, devolvemos un mensaje de error, sino devolvemos un mensaje de exito
+        if result is None:
+            return { "estado": "error", "accion": "encontrar", "mensaje": "No se encontro a la persona", "data": None }
+        else:
+            return { "estado": "ok", "accion": "encontrar", "mensaje": "Persona encontrada exitosamente", "data": result }
+   
+
+    #Si la accion es mostrar, llamamos a la funcion mostrar_personas
+    elif accion == "mostrar":
+
+        result = mostrar_personas(lista_personas)
+
+        #Si el resultado es None, devolvemos un mensaje de error, sino devolvemos un mensaje de exito
+        if result is None:
+            return { "estado": "error", "accion": "mostrar", "mensaje": "No se pudieron mostrar las personas", "data": None }
+        else:
+            return { "estado": "ok", "accion": "mostrar", "mensaje": "Personas mostradas exitosamente", "data": result }
+    
+    #Si la accion es modificar, llamamos a la funcion modificar_persona
+    elif accion == "modificar":
+
+        #Extraemos los datos necesarios del diccionario dato
+        id_persona = dato.get("id")
+        nuevo_nombre = dato.get("nombre")
+        nueva_edad = dato.get("edad")
+
+
+        result = modificar_persona(lista_personas, id_persona, nuevo_nombre, nueva_edad)
+
+        #Si el resultado es None, devolvemos un mensaje de error, sino devolvemos un mensaje de exito
+        if result is None:
+            return { "estado": "error", "accion": "modificar", "mensaje": "No se pudo modificar a la persona", "data": None }
+        else:
+            return { "estado": "ok", "accion": "modificar", "mensaje": "Persona modificada exitosamente", "data": result }
+
+    #Si la accion es eliminar, llamamos a la funcion eliminar_persona    
+    elif accion == "eliminar":
+
+        id_persona = dato.get("id")
+
+
+        result = eliminar_persona(lista_personas, id_persona)
+
+        #Si el resultado es None, devolvemos un mensaje de error, sino devolvemos un mensaje de exito
+        if result is None:
+            return { "estado": "error", "accion": "eliminar", "mensaje": "No se pudo eliminar a la persona", "data": None }
+        else:
+            return { "estado": "ok", "accion": "eliminar", "mensaje": "Persona eliminada exitosamente", "data": result }
+
+    #Si la accion no es ninguna de las anteriores, devolvemos un mensaje de error    
+    else:
+        return "Accion no valida"
