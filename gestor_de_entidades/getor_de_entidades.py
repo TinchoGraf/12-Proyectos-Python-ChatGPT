@@ -131,3 +131,4 @@ def controlador(accion, dato, lista_personas):
     #Si la accion no es ninguna de las anteriores, devolvemos un mensaje de error    
     else:
         return "Accion no valida"
+    
