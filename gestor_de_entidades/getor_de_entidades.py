@@ -133,7 +133,7 @@ def controlador(accion, dato, lista_personas):
 
     #Si la accion no es ninguna de las anteriores, devolvemos un mensaje de error    
     else:
-        return "Accion no valida"
+        return { "estado": "error", "accion": accion, "mensaje": "Accion no reconocida", "data": None }
     
 
 #Creamos una funcion para guardar la lista en un archivo
@@ -154,3 +154,78 @@ def cargar_desde_archivo(nombre_archivo):
             return { "estado": "ok", "accion": "cargar_desde_archivo", "mensaje": "Lista cargada exitosamente", "data": lista_personas }
     except FileNotFoundError:
         return { "estado": "error", "accion": "cargar_desde_archivo", "mensaje": "No se encontro el archivo", "data": None }
+
+
+#Armamos un main para ejecutar el programa y probar las funciones
+def main():
+    #Cargamos la lista desde el archivo, si el archivo no existe, se creará una nueva lista vacia
+    resultado_carga = cargar_desde_archivo("personas.json")
+    if resultado_carga["estado"] == "ok":
+        lista_personas = resultado_carga["data"]
+    else:
+        lista_personas = []
+
+    #Probamos la funcion controlador con diferentes acciones
+    result = controlador("cargar", {"nombre": "Juan", "edad": 30}, lista_personas)
+    if result["estado"] == "ok":
+        print(result["mensaje"])
+    else:
+        print(result["mensaje"])
+    
+    result = controlador("cargar", {"nombre": "Maria", "edad": 25}, lista_personas)
+    if result["estado"] == "ok":
+        print(result["mensaje"])
+    else:
+        print(result["mensaje"])
+
+    #Probamos la funcion mostrar para ver las personas cargadas
+    result = controlador("mostrar", {}, lista_personas)
+    if result["estado"] == "ok":
+        print(result["mensaje"])
+    else:
+        print(result["mensaje"])
+
+    #Probamos la funcion encontrar para buscar a una persona por id
+    result = controlador("encontrar", {"id": 1}, lista_personas)
+    if result["estado"] == "ok":
+        print(result["mensaje"])
+    else:
+        print(result["mensaje"])
+
+    #Probamos la funcion modificar para cambiar los datos de una persona
+    result = controlador("modificar", {"id": 1, "nombre": "Juan Perez", "edad": 31}, lista_personas)
+    if result["estado"] == "ok":
+        print(result["mensaje"])
+    else:
+        print(result["mensaje"])
+
+    #Volvemos a mostrar para ver los cambios realizados
+    result = controlador("mostrar", {}, lista_personas)
+    if result["estado"] == "ok":
+        print(result["mensaje"])
+    else:
+        print(result["mensaje"])
+
+    #Probamos la funcion eliminar para eliminar a una persona por id
+    result = controlador("eliminar", {"id": 2}, lista_personas)   
+    if result["estado"] == "ok":
+        print(result["mensaje"])
+    else:
+        print(result["mensaje"])
+
+    #Volvemos a mostrar para ver los cambios realizados
+    result = controlador("mostrar", {}, lista_personas)
+    if result["estado"] == "ok":
+        print(result["mensaje"])
+    else:
+        print(result["mensaje"])
+
+    #Guardamos la lista en el archivo al finalizar el programa
+    result = guardar_en_archivo(lista_personas, "personas.json")
+    if result["estado"] == "ok":
+        print(result["mensaje"])
+    else:
+        print(result["mensaje"])
+
+if __name__ == "__main__":
+    main()
