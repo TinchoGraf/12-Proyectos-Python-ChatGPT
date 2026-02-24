@@ -1,0 +1,25 @@
+#Agregamos los imports necesarios para crear el servidor con Flask
+from flask import Flask, jsonify
+from logica import controlador
+
+#Creamos una lista vacia para pasar por parametro, luego se eliminará para cargarla y descargarla desde un archivo
+lista_personas = []
+
+#Creamos la instancia de la aplicación Flask
+app = Flask(__name__)
+
+#Definimos una ruta para el endpoint raíz que devolverá un mensaje indicando que el servidor está funcionando correctamente
+@app.route("/")
+def inicio():
+    return "Servidor funcionando correctamente"
+
+#Definimos una ruta para el endpoint "/personas" que devolverá la lista de personas en formato JSON utilizando la función controlador para obtener los datos
+@app.route("/personas", methods=["GET"])
+def obtener_personas():
+    resultado = controlador("mostrar", {}, lista_personas)
+    return jsonify(resultado)
+
+#Hacemos que el servidor ejecute en modo debug para que se reinicie automáticamente cada vez que hagamos cambios en el código
+if __name__ == "__main__":
+    app.run()
+
