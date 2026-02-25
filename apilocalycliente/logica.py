@@ -82,6 +82,20 @@ def controlador(accion, dato, lista_personas):
         nombre_persona = dato.get("nombre")
         edad_persona = dato.get("edad")
 
+        if not nombre_persona or not edad_persona:
+            return {
+        "estado": "error",
+        "accion": "cargar",
+        "mensaje": "Nombre y edad son obligatorios",
+        "data": None
+        }
+
+        if not nombre_persona:
+            return { "estado": "error", "accion": "cargar", "mensaje": "Falta el nombre", "data": None }
+
+        if not edad_persona:
+            return { "estado": "error", "accion": "cargar", "mensaje": "Falta la edad", "data": None }
+
         #Encapsulamos el resultado en una variable para luego chequear si es None o no
         result = cargar_lista(lista_personas, nombre_persona, edad_persona)
 
