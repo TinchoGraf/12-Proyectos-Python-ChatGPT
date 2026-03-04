@@ -9,7 +9,7 @@ def cargar_lista(lista_personas, nombre_persona, edad_persona):
     if len(lista_personas) == 0:
         id_persona = 1
     else:
-        id_persona = len(lista_personas) + 1
+        id_persona = max(persona["id"] for persona in lista_personas) + 1
 
     persona = {
         "id": id_persona,
@@ -54,24 +54,17 @@ def eliminar_persona(lista_personas, id_persona):
     return persona_a_eliminar
 
 #Creamos una funcion para guardar la lista en un archivo
-def guardar_en_archivo(lista_personas, nombre_archivo):
-    try:
-        with open(nombre_archivo, "w") as archivo:
-            json.dump(lista_personas, archivo, indent=4)
-            return { "estado": "ok", "accion": "guardar", "mensaje": "Lista guardada exitosamente", "data": lista_personas }
-    except Exception as e:
-        return { "estado": "error", "accion": "guardar", "mensaje": f"No se pudo guardar la lista: {str(e)}", "data": None }
-    
+def guardar_en_archivo(lista_personas, nombre_archivo="personas.json"):
+    with open(nombre_archivo, "w") as archivo:
+        json.dump(lista_personas, archivo, indent=4)    
     
 #Creamos una funcion para cargar la lista desde un archivo
-def cargar_desde_archivo(nombre_archivo):
+def cargar_desde_archivo(nombre_archivo="personas.json"):
     try:
-            with open(nombre_archivo, "r") as archivo:
-                lista_personas = json.load(archivo)
-            return { "estado": "ok", "accion": "cargar_desde_archivo", "mensaje": "Lista cargada exitosamente", "data": lista_personas }
+        with open(nombre_archivo, "r") as archivo:
+            return json.load(archivo)
     except FileNotFoundError:
-        return { "estado": "error", "accion": "cargar_desde_archivo", "mensaje": "No se encontro el archivo", "data": None }
-
+        return []
 
 
 #Creamos una funcion controladora que reciba por parametros, la accion a realizar, los datos y la lista
@@ -103,7 +96,10 @@ def controlador(accion, dato, lista_personas):
         if result is None:
             return { "estado": "error", "accion": "cargar", "mensaje": "No se pudo cargar a la persona", "data": None }
         else:
+            guardar_en_archivo(lista_personas)
             return { "estado": "ok", "accion": "cargar", "mensaje": "Persona cargada exitosamente", "data": result }
+        
+        
     
     #Si la accion es encontrar, llamamos a la funcion encontrar_persona_por_id
     elif accion == "encontrar":
@@ -146,6 +142,7 @@ def controlador(accion, dato, lista_personas):
         if result is None:
             return { "estado": "error", "accion": "modificar", "mensaje": "No se pudo modificar a la persona", "data": None }
         else:
+            guardar_en_archivo(lista_personas)
             return { "estado": "ok", "accion": "modificar", "mensaje": "Persona modificada exitosamente", "data": result }
 
     #Si la accion es eliminar, llamamos a la funcion eliminar_persona    
@@ -160,6 +157,7 @@ def controlador(accion, dato, lista_personas):
         if result is None:
             return { "estado": "error", "accion": "eliminar", "mensaje": "No se pudo eliminar a la persona", "data": None }
         else:
+            guardar_en_archivo(lista_personas)
             return { "estado": "ok", "accion": "eliminar", "mensaje": "Persona eliminada exitosamente", "data": result }
 
     #Si la accion no es ninguna de las anteriores, devolvemos un mensaje de error    
